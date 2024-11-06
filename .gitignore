@@ -30,3 +30,5 @@
 # McPAT custom
 mcpat
 obj_opt/
+McPAT_input/
+results/
