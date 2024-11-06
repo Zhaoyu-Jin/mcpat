@@ -79,7 +79,7 @@
       as in the complexity effective processors paper; issue_width==dispatch_width -->
       <param name="commit_width" value="config.system.processor.o3.0.core.commitWidth"/>
       <!-- commit_width determines the number of ports of register files -->
-      <param name="fp_issue_width" value="2"/>
+      <param name="fp_issue_width" value="config.system.processor.o3.0.core.issueWidth"/>
       <param name="prediction_width" value="1"/>
       <!-- number of branch instructions can be predicted simultaneously-->
       <!-- Current version of McPAT does not distinguish int and floating point pipelines 
@@ -272,10 +272,10 @@
         <stat name="write_misses" value="stats.system.cpu.dcache.WriteReq_misses::total"/>
         <stat name="conflicts" value="stats.system.cpu.dcache.replacements"/>
       </component>
-      <param name="number_of_BTB" value="2"/>
+      <param name="number_of_BTB" value="1"/>
       <component id="system.core.BTB" name="BTB">
         <!-- all the buffer related are optional -->
-        <param name="BTB_config" value="config.system.processor.o3.0.core.branchPred.BTBEntries * 4,4,2,1, 1,3"/>
+        <param name="BTB_config" value="config.system.processor.o3.0.core.branchPred.BTBEntries * 11,11,2,1, 1,1"/>
         <!--should be 4096 + 1024 -->
         <!-- the parameters are capacity,block_width,associativity,bank, throughput w.r.t. core clock, latency w.r.t. core clock,-->
         <stat name="read_accesses" value="stats.system.cpu.branchPred.BTBLookups"/>
@@ -331,7 +331,7 @@
     </component>
     <!--**********************************************************************-->
     <component id="system.NoC0" name="noc0">
-      <param name="clockrate" value="3400"/>
+      <param name="clockrate" value="1e-6/( config.system.clk_domain.clock.0 * 1e-12)"/>
       <param name="vdd" value="0"/>
       <!-- 0 means using ITRS default vdd -->
       <param name="power_gating_vcc" value="-1"/>
@@ -377,13 +377,13 @@
       <!-- 0 means using ITRS default vdd -->
       <param name="power_gating_vcc" value="-1"/>
       <!-- "-1" means using default power gating virtual power supply voltage constrained by technology and computed automatically -->
-      <param name="peak_transfer_rate" value="1200"/>
+      <param name="peak_transfer_rate" value="3200"/>
       <!--MB/S-->
       <param name="block_size" value="64"/>
       <!--B-->
       <param name="number_mcs" value="0"/>
       <!-- current McPAT only supports homogeneous memory controllers -->
-      <param name="memory_channels_per_mc" value="2"/>
+      <param name="memory_channels_per_mc" value="1"/>
       <param name="number_ranks" value="2"/>
       <!-- TODO: Simple Memory Does not have ranks per channel configuration? -->
       <!--<param name="withPHY" value="config.system.mem_ctrls.0.dram.ranks_per_channel"/> -->
@@ -393,9 +393,9 @@
       <param name="databus_width" value="128"/>
       <param name="addressbus_width" value="51"/>
       <!-- McPAT will add the control bus width to the address bus width automatically -->
-      <!-- <stat name="memory_accesses" value="(stats.system.mem_ctrls.readReqs + stats.system.mem_ctrls.writeReqs)"/>
+      <stat name="memory_accesses" value="(stats.system.mem_ctrls.readReqs + stats.system.mem_ctrls.writeReqs)"/>
       <stat name="memory_reads" value="stats.system.mem_ctrls.readReqs"/>
-      <stat name="memory_writes" value="stats.system.mem_ctrls.writeReqs"/> -->
+      <stat name="memory_writes" value="stats.system.mem_ctrls.writeReqs"/>
       <!-- McPAT does not track individual mc, instead, it takes the total accesses and calculate 
       the average power per MC or per channel. This is sufficient for most application. 
       Further track down can be easily added in later versions. -->

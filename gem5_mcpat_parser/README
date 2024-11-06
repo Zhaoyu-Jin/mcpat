@@ -1,1 +1,7 @@
 Code modified from https://github.com/saideeptiku/Gem5McPatParser
+
+1. Follow the McPAT README to build McPAT
+2. Set the gem5_out_dir variable in run_mcpat.sh to the output directory of Gem5
+3. bash run_mcpat.sh print_level if_optimize_clk out_put_filename
+e.g. bash run_mcpat.sh 2 0 McPAT_out
+McPAT output will be stored in the ./results folder
